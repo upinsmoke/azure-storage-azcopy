@@ -81,7 +81,7 @@ func (s *ExampleSuite) Scenario_SingleFileList(svm *ScenarioVariationManager) {
 			Targets: []ResourceManager{
 				srcObj.Parent().(RemoteResourceManager).WithSpecificAuthType(EExplicitCredentialType.SASToken(), svm, CreateAzCopyTargetOptions{
 					SASTokenOptions: GenericServiceSignatureValues{
-						Permissions: (&blobsas.BlobPermissions{Read: true, List: true}).String(),
+						Permissions: (&blobsas.ContainerPermissions{Read: true, List: true}).String(),
 					},
 				}),
 			},
