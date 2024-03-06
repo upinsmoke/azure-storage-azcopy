@@ -46,6 +46,7 @@ jobs:
 
       - script: |
           GOARCH=amd64 GOOS=linux go build -o "$(Build.ArtifactStagingDirectory)/azcopy_linux_amd64"
+          ldd "$(Build.ArtifactStagingDirectory)/azcopy_linux_amd64"
         displayName: 'Generate Linux AMD64'
         condition: eq(variables.type, 'linux')
 
@@ -57,6 +58,7 @@ jobs:
 
       - script: |
           GOARCH=arm64 GOOS=linux go build -o "$(Build.ArtifactStagingDirectory)/azcopy_linux_arm64"
+          ldd "$(Build.ArtifactStagingDirectory)/azcopy_linux_arm64"
         displayName: 'Generate Linux ARM64'
         condition: eq(variables.type, 'linux')
 
