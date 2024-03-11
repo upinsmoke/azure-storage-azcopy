@@ -50,8 +50,8 @@ func (u *appendBlobUploader) Prologue(ps common.PrologueState) (destinationModif
 	return u.appendBlobSenderBase.Prologue(ps)
 }
 
-func newAppendBlobUploader(jptm IJobPartTransferMgr, destination string, pacer pacer, sip ISourceInfoProvider) (sender, error) {
-	senderBase, err := newAppendBlobSenderBase(jptm, destination, pacer, sip)
+func newAppendBlobUploader(jptm IJobPartTransferMgr, pacer pacer, sip ISourceInfoProvider) (sender, error) {
+	senderBase, err := newAppendBlobSenderBase(jptm, pacer, sip)
 	if err != nil {
 		return nil, err
 	}

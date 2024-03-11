@@ -103,16 +103,16 @@ func newURLToBlobCopier(jptm IJobPartTransferMgr, destination string, pacer pace
 	}
 
 	if jptm.Info().IsFolderPropertiesTransfer() {
-		return newBlobFolderSender(jptm, destination, srcInfoProvider)
+		return newBlobFolderSender(jptm, srcInfoProvider)
 	} else if jptm.Info().EntityType == common.EEntityType.Symlink() {
-		return newBlobSymlinkSender(jptm, destination, srcInfoProvider)
+		return newBlobSymlinkSender(jptm, srcInfoProvider)
 	}
 
 	switch targetBlobType {
 	case blob.BlobTypeBlockBlob:
 		return newURLToBlockBlobCopier(jptm, pacer, srcInfoProvider)
 	case blob.BlobTypeAppendBlob:
-		return newURLToAppendBlobCopier(jptm, destination, pacer, srcInfoProvider)
+		return newURLToAppendBlobCopier(jptm, pacer, srcInfoProvider)
 	case blob.BlobTypePageBlob:
 		return newURLToPageBlobCopier(jptm, destination, pacer, srcInfoProvider)
 	default:

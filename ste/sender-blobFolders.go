@@ -24,7 +24,7 @@ type blobFolderSender struct {
 	blobTagsToApply   common.BlobTags
 }
 
-func newBlobFolderSender(jptm IJobPartTransferMgr, destination string, sip ISourceInfoProvider) (sender, error) {
+func newBlobFolderSender(jptm IJobPartTransferMgr, sip ISourceInfoProvider) (sender, error) {
 	s, err := jptm.DstServiceClient().BlobServiceClient()
 	if err != nil {
 		return nil, err

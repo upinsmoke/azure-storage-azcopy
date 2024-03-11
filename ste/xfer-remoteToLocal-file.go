@@ -39,9 +39,9 @@ const azcopyTempDownloadPrefix string = ".azDownload-%s-"
 func remoteToLocal(jptm IJobPartTransferMgr, pacer pacer, df downloaderFactory) {
 	info := jptm.Info()
 	if info.IsFolderPropertiesTransfer() {
-		remoteToLocal_folder(jptm, pacer, df)
+		remoteToLocal_folder(jptm, df)
 	} else if info.EntityType == common.EEntityType.Symlink() {
-		remoteToLocal_symlink(jptm, pacer, df)
+		remoteToLocal_symlink(jptm, df)
 	} else {
 		remoteToLocal_file(jptm, pacer, df)
 	}

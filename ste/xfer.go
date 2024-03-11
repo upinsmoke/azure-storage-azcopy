@@ -77,7 +77,7 @@ func parameterizeSend(targetFunction newJobXferWithSenderFactory, sf senderFacto
 }
 
 // the xfer factory is generated based on the type of source and destination
-func computeJobXfer(fromTo common.FromTo, blobType common.BlobType) newJobXfer {
+func computeJobXfer(fromTo common.FromTo) newJobXfer {
 
 	//local helper functions
 

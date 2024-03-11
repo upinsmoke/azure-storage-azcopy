@@ -424,8 +424,8 @@ type AddJobPartArgs struct {
 
 	// These clients are valid if this fits the FromTo. i.e if
 	// we're uploading
-	SrcClient *common.ServiceClient
-	DstClient *common.ServiceClient
+	SrcClient  *common.ServiceClient
+	DstClient  *common.ServiceClient
 	SrcIsOAuth bool // true if source is authenticated via token
 
 	ScheduleTransfers bool
@@ -446,7 +446,7 @@ func (jm *jobMgr) AddJobPart2(args *AddJobPartArgs) IJobPartMgr {
 		cacheLimiter:      jm.cacheLimiter,
 		fileCountLimiter:  jm.fileCountLimiter,
 		closeOnCompletion: args.CompletionChan,
-		srcIsOAuth:    	   args.SrcIsOAuth,
+		srcIsOAuth:        args.SrcIsOAuth,
 	}
 	// If an existing plan MMF was supplied, re use it. Otherwise, init a new one.
 	if args.ExistingPlanMMF == nil {
@@ -1256,35 +1256,3 @@ func (m *jobPartToJobPartMgr) Iterate(readonly bool, f func(k common.PartNumber,
 	}
 	locker.Unlock()
 }
-
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// ThroughputState struct holds the attribute to monitor the through of an existing JobOrder
-// type XferThroughput struct {
-//	lastCheckedTime  time.Time
-//	lastCheckedBytes int64
-//	currentBytes     int64
-// }
-
-// getLastCheckedTime api returns the lastCheckedTime of ThroughputState instance in thread-safe manner
-/*func (t *XferThroughput) LastCheckedTime() time.Time { return t.lastCheckedTime }
-
-// updateLastCheckTime api updates the lastCheckedTime of ThroughputState instance in thread-safe manner
-func (t *XferThroughput) SetLastCheckTime(currentTime time.Time) { t.lastCheckedTime = currentTime }
-
-// getLastCheckedBytes api returns the lastCheckedBytes of ThroughputState instance in thread-safe manner
-func (t *XferThroughput) LastCheckedBytes() int64 { return atomic.LoadInt64(&t.lastCheckedBytes) }
-
-// updateLastCheckedBytes api updates the lastCheckedBytes of ThroughputState instance in thread-safe manner
-func (t *XferThroughput) SetLastCheckedBytes(bytes int64) {
-	atomic.StoreInt64(&t.lastCheckedBytes, bytes)
-}
-
-// getCurrentBytes api returns the currentBytes of ThroughputState instance in thread-safe manner
-func (t *XferThroughput) CurrentBytes() int64 { return atomic.LoadInt64(&t.currentBytes) }
-
-// updateCurrentBytes api adds the value in currentBytes of ThroughputState instance in thread-safe manner
-func (t *XferThroughput) SetCurrentBytes(bytes int64) int64 {
-	return atomic.AddInt64(&t.currentBytes, bytes)
-}
-*/

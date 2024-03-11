@@ -22,6 +22,7 @@ package ste
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azfile/file"
@@ -43,7 +44,7 @@ func newAzureFilesDownloader(jptm IJobPartTransferMgr) (downloader, error) {
 	}
 
 	source := fsc.NewShareClient(jptm.Info().SrcContainer)
-	
+
 	if jptm.Info().SnapshotID != "" {
 		source, err = source.WithSnapshot(jptm.Info().SnapshotID)
 		if err != nil {
@@ -171,4 +172,15 @@ func (bd *azureFilesDownloader) SetFolderProperties(jptm IJobPartTransferMgr) er
 	bd.init(jptm) // since Prologue doesn't get called for folders
 	_, err := bd.preserveAttributes()
 	return err
+}
+
+func (a *azureFilesDownloader) parentIsShareRoot(source string) bool {
+	fileURLParts, err := file.ParseURL(source)
+	if err != nil {
+		return false
+	}
+	path := fileURLParts.DirectoryOrFilePath
+	sep := common.DeterminePathSeparator(path)
+	splitPath := strings.Split(strings.Trim(path, sep), sep)
+	return path != "" && len(splitPath) == 1
 }

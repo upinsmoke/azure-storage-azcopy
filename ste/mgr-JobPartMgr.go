@@ -184,10 +184,9 @@ type jobPartMgr struct {
 	srcServiceClient *common.ServiceClient
 	dstServiceClient *common.ServiceClient
 
-
-	credInfo               common.CredentialInfo
-	srcIsOAuth			   bool // true if source is authenticated via oauth
-	credOption             *common.CredentialOpOptions
+	credInfo   common.CredentialInfo
+	srcIsOAuth bool // true if source is authenticated via oauth
+	credOption *common.CredentialOpOptions
 	// When the part is schedule to run (inprogress), the below fields are used
 	planMMF *JobPartPlanMMF // This Job part plan's MMF
 
@@ -326,7 +325,7 @@ func (jpm *jobPartMgr) ScheduleTransfers(jobCtx context.Context) {
 	jpm.preserveLastModifiedTime = plan.DstLocalData.PreserveLastModifiedTime
 
 	jpm.blobTypeOverride = plan.DstBlobData.BlobType
-	jpm.newJobXfer = computeJobXfer(plan.FromTo, plan.DstBlobData.BlobType)
+	jpm.newJobXfer = computeJobXfer(plan.FromTo)
 
 	jpm.priority = plan.Priority
 
@@ -692,14 +691,3 @@ func (jpm *jobPartMgr) SourceIsOAuth() bool {
 func (jpm *jobPartMgr) SendXferDoneMsg(msg xferDoneMsg) {
 	jpm.jobMgr.SendXferDoneMsg(msg)
 }
-
-// TODO: Can we delete this method?
-// numberOfTransfersDone returns the numberOfTransfersDone_doNotUse of JobPartPlanInfo
-// instance in thread safe manner
-// func (jpm *jobPartMgr) numberOfTransfersDone() uint32 {	return atomic.LoadUint32(&jpm.numberOfTransfersDone_doNotUse)}
-
-// setNumberOfTransfersDone sets the number of transfers done to a specific value
-// in a thread safe manner
-// func (jppi *jobPartPlanInfo) setNumberOfTransfersDone(val uint32) {
-//	atomic.StoreUint32(&jPartPlanInfo.numberOfTransfersDone_doNotUse, val)
-// }

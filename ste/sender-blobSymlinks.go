@@ -22,7 +22,7 @@ type blobSymlinkSender struct {
 	blobTagsToApply   common.BlobTags
 }
 
-func newBlobSymlinkSender(jptm IJobPartTransferMgr, destination string, sip ISourceInfoProvider) (sender, error) {
+func newBlobSymlinkSender(jptm IJobPartTransferMgr, sip ISourceInfoProvider) (sender, error) {
 	s, err := jptm.DstServiceClient().BlobServiceClient()
 	if err != nil {
 		return nil, nil

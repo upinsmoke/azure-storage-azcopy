@@ -221,9 +221,9 @@ func newBlobUploader(jptm IJobPartTransferMgr, destination string, pacer pacer, 
 	}
 
 	if jptm.Info().IsFolderPropertiesTransfer() {
-		return newBlobFolderSender(jptm, destination, sip)
+		return newBlobFolderSender(jptm, sip)
 	} else if jptm.Info().EntityType == common.EEntityType.Symlink() {
-		return newBlobSymlinkSender(jptm, destination, sip)
+		return newBlobSymlinkSender(jptm, sip)
 	}
 
 	switch intendedType {
@@ -232,7 +232,7 @@ func newBlobUploader(jptm IJobPartTransferMgr, destination string, pacer pacer, 
 	case blob.BlobTypePageBlob:
 		return newPageBlobUploader(jptm, destination, pacer, sip)
 	case blob.BlobTypeAppendBlob:
-		return newAppendBlobUploader(jptm, destination, pacer, sip)
+		return newAppendBlobUploader(jptm, pacer, sip)
 	default:
 		return newBlockBlobUploader(jptm, pacer, sip) // If no blob type was inferred, assume block blob.
 	}
